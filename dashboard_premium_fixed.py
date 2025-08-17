@@ -28,8 +28,16 @@ def get_credentials():
     # Try Streamlit Cloud secrets first
     try:
         if 'gcp_service_account' in st.secrets:
-            return dict(st.secrets['gcp_service_account'])
-    except:
+            # Convert Streamlit secrets to proper dict format
+            creds = dict(st.secrets['gcp_service_account'])
+            
+            # Fix the private key newlines (common issue with TOML secrets)
+            if 'private_key' in creds:
+                creds['private_key'] = creds['private_key'].replace('\\n', '\n')
+                
+            return creds
+    except Exception as e:
+        st.error(f"Error loading Streamlit secrets: {str(e)}")
         pass
     
     # Fall back to local credentials.json
