@@ -55,10 +55,15 @@ st.set_page_config(
     page_title="Adaptive Training System",
     page_icon="⚡",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="auto",  # Auto-detect based on screen size
+    menu_items={
+        'Get Help': None,
+        'Report a bug': None,
+        'About': None
+    }
 )
 
-# Professional dark theme CSS with improved readability
+# Professional dark theme CSS with mobile responsiveness
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
@@ -86,20 +91,219 @@ st.markdown("""
         --red-base: #c40000;
     }
     
-    /* Main app background */
-    .stApp {
-        background: var(--bg-primary);
+    /* Mobile-first responsive design */
+    @media (max-width: 768px) {
+        /* Mobile app container adjustments */
+        .stApp {
+            background: var(--bg-primary);
+        }
+        
+        /* Mobile sidebar - make it overlay on small screens */
+        section[data-testid="stSidebar"] {
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            z-index: 999;
+        }
+        
+        /* Ensure sidebar content is visible */
+        section[data-testid="stSidebar"] > div {
+            background: var(--bg-secondary);
+        }
+        
+        /* Mobile main content padding */
+        .main .block-container {
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+            padding-top: 1rem !important;
+            max-width: 100% !important;
+        }
+        
+        /* Mobile header adjustments */
+        .main-header {
+            padding: 1.5rem 1rem !important;
+            margin-bottom: 1rem !important;
+            border-radius: 12px !important;
+        }
+        
+        .header-content {
+            flex-direction: column !important;
+            text-align: center !important;
+            gap: 1rem !important;
+        }
+        
+        .app-title {
+            font-size: 1.75rem !important;
+            line-height: 1.2 !important;
+        }
+        
+        .app-subtitle {
+            font-size: 0.875rem !important;
+        }
+        
+        .header-stats {
+            justify-content: space-around !important;
+            gap: 1rem !important;
+            width: 100% !important;
+        }
+        
+        .header-stat-value {
+            font-size: 1.5rem !important;
+        }
+        
+        .header-stat-label {
+            font-size: 0.75rem !important;
+        }
+        
+        /* Mobile metric cards */
+        .metric-card {
+            padding: 1rem !important;
+            margin-bottom: 1rem !important;
+        }
+        
+        .metric-icon {
+            width: 36px !important;
+            height: 36px !important;
+            font-size: 1.25rem !important;
+            margin-bottom: 0.75rem !important;
+        }
+        
+        .metric-value {
+            font-size: 1.5rem !important;
+        }
+        
+        .metric-label {
+            font-size: 0.75rem !important;
+        }
+        
+        /* Mobile charts */
+        .chart-card {
+            padding: 1rem !important;
+            margin-bottom: 1rem !important;
+            border-radius: 12px !important;
+        }
+        
+        .chart-title {
+            font-size: 1rem !important;
+        }
+        
+        .chart-subtitle {
+            font-size: 0.75rem !important;
+        }
+        
+        /* Mobile week progress */
+        .week-progress-container {
+            padding: 1rem !important;
+            margin-bottom: 1rem !important;
+        }
+        
+        .week-bars {
+            gap: 2px !important;
+        }
+        
+        .week-bar {
+            height: 32px !important;
+        }
+        
+        .week-bar-label {
+            font-size: 0.625rem !important;
+        }
+        
+        /* Mobile progress rings */
+        .progress-ring {
+            width: 80px !important;
+            height: 80px !important;
+        }
+        
+        .progress-ring svg {
+            width: 80px !important;
+            height: 80px !important;
+        }
+        
+        .progress-value {
+            font-size: 1.25rem !important;
+        }
+        
+        /* Mobile tabs */
+        .stTabs [data-baseweb="tab"] {
+            padding: 0.5rem 0.75rem !important;
+            font-size: 0.875rem !important;
+        }
+        
+        /* Mobile data tables */
+        .dataframe {
+            font-size: 0.75rem !important;
+        }
+        
+        /* Mobile sidebar content */
+        section[data-testid="stSidebar"] .block-container {
+            padding: 0.5rem !important;
+        }
+        
+        .sidebar-title {
+            font-size: 0.75rem !important;
+        }
+        
+        /* Mobile selectboxes */
+        .stSelectbox label {
+            font-size: 0.75rem !important;
+        }
+        
+        /* Mobile metrics in sidebar */
+        section[data-testid="stSidebar"] [data-testid="metric-container"] {
+            padding: 0.75rem !important;
+            margin-bottom: 0.5rem !important;
+        }
+        
+        section[data-testid="stSidebar"] [data-testid="metric-value"] {
+            font-size: 1.25rem !important;
+        }
+        
+        section[data-testid="stSidebar"] [data-testid="metric-label"] {
+            font-size: 0.675rem !important;
+        }
+        
+        /* Mobile expanders */
+        .streamlit-expanderHeader {
+            font-size: 0.875rem !important;
+        }
     }
     
-    /* Sidebar styling - data heavy */
-    section[data-testid="stSidebar"] {
-        background: var(--bg-secondary);
-        border-right: 1px solid var(--border-color);
-        width: 320px !important;
+    /* Tablet adjustments */
+    @media (min-width: 769px) and (max-width: 1024px) {
+        .main-header {
+            padding: 2rem !important;
+        }
+        
+        .app-title {
+            font-size: 2rem !important;
+        }
+        
+        .header-stats {
+            gap: 1.5rem !important;
+        }
+        
+        section[data-testid="stSidebar"] {
+            width: 280px !important;
+        }
     }
     
-    section[data-testid="stSidebar"] .block-container {
-        padding-top: 1rem;
+    /* Desktop styles (existing) */
+    @media (min-width: 1025px) {
+        /* Main app background */
+        .stApp {
+            background: var(--bg-primary);
+        }
+        
+        /* Sidebar styling - data heavy */
+        section[data-testid="stSidebar"] {
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            width: 320px !important;
+        }
+        
+        section[data-testid="stSidebar"] .block-container {
+            padding-top: 1rem;
+        }
     }
     
     /* Hide Streamlit branding */
@@ -613,6 +817,29 @@ def load_training_data():
     
     return pd.DataFrame(all_data)
 
+def get_mobile_chart_height():
+    """Get appropriate chart height based on viewport"""
+    return """
+    <script>
+    function isMobile() {
+        return window.innerWidth <= 768;
+    }
+    
+    function isTablet() {
+        return window.innerWidth > 768 && window.innerWidth <= 1024;
+    }
+    
+    // Adjust chart heights based on device
+    if (isMobile()) {
+        document.documentElement.style.setProperty('--chart-height', '250px');
+    } else if (isTablet()) {
+        document.documentElement.style.setProperty('--chart-height', '300px');
+    } else {
+        document.documentElement.style.setProperty('--chart-height', '300px');
+    }
+    </script>
+    """
+
 def create_metric_card(icon, label, value, change=None, color="purple"):
     """Create a metric card with icon and optional change indicator"""
     change_html = ""
@@ -662,6 +889,9 @@ def create_progress_ring(percentage, label):
     """
 
 def main():
+    # Add mobile chart height detection
+    st.markdown(get_mobile_chart_height(), unsafe_allow_html=True)
+    
     # SIDEBAR (Data-Heavy Analytics)
     with st.sidebar:
         st.markdown("""
@@ -930,7 +1160,7 @@ def main():
                     gridcolor='#2a2a3e',
                     zeroline=False
                 ),
-                height=300,
+                height=250,  # Mobile-friendly height
                 margin=dict(l=0, r=0, t=0, b=0),
                 showlegend=False
             )
@@ -1230,7 +1460,7 @@ def main():
                     showscale=True,
                     colorbar=dict(
                         title="Efficiency",
-                        titlefont=dict(color='#c8c8d8', size=10),
+                        title_font=dict(color='#c8c8d8', size=10),
                         tickfont=dict(color='#9898b0', size=9),
                         bgcolor='#1a1a28',
                         bordercolor='#2a2a3e',
@@ -1305,7 +1535,7 @@ def main():
                 showscale=True,
                 colorbar=dict(
                     title="WoW %",
-                    titlefont=dict(color='#c8c8d8', size=10),
+                    title_font=dict(color='#c8c8d8', size=10),
                     tickfont=dict(color='#9898b0', size=9),
                     x=1.1
                 )
