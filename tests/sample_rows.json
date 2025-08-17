@@ -1,0 +1,8 @@
+[
+  {"week":1,"muscleGroup":"Chest","exercise":"Bench Press","sets":3,"reps":8},
+  {"week":2,"muscleGroup":"Chest","exercise":"Bench Press","sets":3,"reps":8},
+  {"week":3,"muscleGroup":"Chest","exercise":"Bench Press","sets":3,"reps":8},
+  {"week":4,"muscleGroup":"Chest","exercise":"Bench Press","sets":3,"reps":8},
+  {"week":1,"muscleGroup":"Back","exercise":"Pull-ups","sets":3,"reps":5},
+  {"week":2,"muscleGroup":"Back","exercise":"Pull-ups","sets":3,"reps":6}
+]
