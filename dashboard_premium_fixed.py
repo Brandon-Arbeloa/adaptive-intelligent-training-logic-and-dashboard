@@ -20,7 +20,7 @@ BACKEND_DIR = BASE_DIR / 'backend'
 sys.path.insert(0, str(BACKEND_DIR))
 
 # Configuration
-SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/1Js2s7s95miuUzdn44guWnGuML2kxYzN3kG_jsEdWu68/edit'
+SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/1Js2s7s95miuUzdn44guWnGuML2kxYzN3kG_jsEdWu68/edit?usp=sharing'
 
 # Handle credentials for both local and Streamlit Cloud
 def get_credentials():
