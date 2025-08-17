@@ -218,11 +218,39 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+# Handle credentials for both local and Streamlit Cloud
+def get_credentials():
+    """Get credentials from either local file or Streamlit secrets"""
+    # Try Streamlit Cloud secrets first
+    try:
+        if 'gcp_service_account' in st.secrets:
+            # Convert Streamlit secrets to proper dict format
+            creds = dict(st.secrets['gcp_service_account'])
+            
+            # Fix the private key newlines (common issue with TOML secrets)
+            if 'private_key' in creds:
+                creds['private_key'] = creds['private_key'].replace('\\n', '\n')
+                
+            return creds
+    except Exception as e:
+        st.error(f"Error loading Streamlit secrets: {str(e)}")
+        pass
+    
+    # Fall back to local credentials.json
+    if os.path.exists(CRED_PATH):
+        import json
+        with open(CRED_PATH, 'r') as f:
+            return json.load(f)
+    
+    st.error("No credentials found! Please add credentials.json locally or configure Streamlit Cloud secrets.")
+    st.stop()
+
 # Cache the connection
 @st.cache_resource
 def init_connection():
     """Initialize Google Sheets connection"""
-    gc = gspread.service_account(filename=CRED_PATH)
+    creds = get_credentials()
+    gc = gspread.service_account_from_dict(creds)
     return gc.open_by_url(SPREADSHEET_URL)
 
 # Cache data with TTL
